@@ -1,0 +1,49 @@
+<div class="register-container">
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email">
+        <div *ngIf="false">
+        <!-- <div *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched"> -->
+          Please enter a valid email.
+        </div>
+      </div>
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name">
+        <div *ngIf="false">
+        <!-- <div *ngIf="registerForm.get('name').invalid && registerForm.get('name').touched"> -->
+          Name is required.
+        </div>
+      </div>
+      <div>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" formControlName="surname">
+        <div *ngIf="false">
+        <!-- <div *ngIf="registerForm.get('surname').invalid && registerForm.get('surname').touched"> -->
+          Surname is required.
+        </div>
+      </div>
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" formControlName="username">
+        <div *ngIf="false">
+        <!-- <div *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched"> -->
+          Username is required.
+        </div>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password">
+        <div *ngIf="false">
+        <!-- <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched"> -->
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <button type="submit">Register</button>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    </form>
+    <button routerLink="/auth/login">Already have an account? Login</button>
+  </div>
+  

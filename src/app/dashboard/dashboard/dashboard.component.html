@@ -1,1 +1,33 @@
-<p>dashboard works!</p>
+  <div class="container mt-3">
+    <app-header></app-header>
+    <div class="row" *ngIf="featuredProperty">
+      <div class="col-12 col-md-4">
+        <div class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active" *ngFor="let photo of featuredProperty.photos; let i = index" [class.active]="i === 0">
+              <img [src]="photo" class="d-block w-100" alt="Featured Property Photo">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8" *ngIf="featuredProperty">
+        <h5>Featured Property</h5>
+        <h4>{{ featuredProperty.location }}</h4>
+        <button class="btn btn-primary" (click)="openDetails(featuredProperty)">View Details</button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-12 col-md-4 mb-3" *ngFor="let property of otherProperties">
+        <div class="card" *ngIf="property != featuredProperty">
+          <img [src]="property.photos[0]" class="card-img-top" alt="Property Photo">
+          <div class="card-body">
+            <h5 class="card-title">{{ property.location }}</h5>
+            <button class="btn btn-primary" (click)="openDetails(property)">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

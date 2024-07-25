@@ -1,0 +1,61 @@
+<div *ngIf="!previewMode" class="container mt-3">
+    <form>
+      <div class="mb-3">
+        <label for="location" class="form-label">Property Location</label>
+        <input type="text" class="form-control" id="location" [(ngModel)]="property.location" name="location">
+      </div>
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact Details</label>
+        <input type="text" class="form-control" id="contact" [(ngModel)]="property.contact" name="contact">
+      </div>
+      <div class="mb-3">
+        <label>Furnished</label><br>
+        <input type="radio" [(ngModel)]="property.furnished" name="furnished" [value]="true"> Yes
+        <input type="radio" [(ngModel)]="property.furnished" name="furnished" [value]="false"> No
+      </div>
+      <div class="mb-3">
+        <label>Amenities</label><br>
+        <input type="checkbox" [(ngModel)]="property.amenities" name="amenities" value="Gym"> Gym
+        <input type="checkbox" [(ngModel)]="property.amenities" name="amenities" value="Elevator"> Elevator
+        <input type="checkbox" [(ngModel)]="property.amenities" name="amenities" value="Club House"> Club House
+        <input type="checkbox" [(ngModel)]="property.amenities" name="amenities" value="Parking"> Parking
+      </div>
+      <div class="mb-3">
+        <label>Vegetarian Preference</label><br>
+        <input type="radio" [(ngModel)]="property.vegetarian" name="vegetarian" [value]="true"> Vegetarian
+        <input type="radio" [(ngModel)]="property.vegetarian" name="vegetarian" [value]="false"> Non-Vegetarian
+      </div>
+      <div class="mb-3">
+        <label for="photos" class="form-label">Upload Photos</label>
+        <input type="file" class="form-control" id="photos" (change)="onFileChange($event)" multiple>
+        <small class="form-text text-muted">You can upload up to 3 photos.</small>
+      </div>
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onPreview()">Preview</button>
+      </div>
+    </form>
+  </div>
+  
+  <div *ngIf="previewMode" class="container mt-3">
+    <h3>Property Preview</h3>
+    <p><strong>Location:</strong> {{property.location}}</p>
+    <p><strong>Contact:</strong> {{property.contact}}</p>
+    <p><strong>Furnished:</strong> {{property.furnished ? 'Yes' : 'No'}}</p>
+    <p><strong>Amenities:</strong> {{property.amenities.join(', ')}}</p>
+    <p><strong>Vegetarian:</strong> {{property.vegetarian ? 'Yes' : 'No'}}</p>
+    <div *ngIf="property.photos.length > 0">
+      <p><strong>Photos:</strong></p>
+      <div *ngFor="let photo of property.photos" class="mb-2">
+        <img [src]="photo" class="img-fluid">
+      </div>
+    </div>
+    <div class="d-flex justify-content-between" *ngIf="!viewDetailsMode">
+      <button type="button" class="btn btn-secondary" (click)="backToForm()">Back</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+    </div>
+    <div class="d-flex justify-content-between" *ngIf="viewDetailsMode">
+      <button type="button" class="btn btn-primary" (click)="onClose()">Close</button>
+    </div>
+  </div>
+  

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 
 interface User {
   email: string;
@@ -11,12 +12,12 @@ interface User {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements CanActivate {
   private users: User[] = [];
 
   private isAuthenticated = false;
 
-  constructor() {
+  constructor(private router: Router) {
     // Default users
     this.users.push({
       email: 'admin@example.com',
@@ -25,6 +26,13 @@ export class AuthService {
       username: 'admin',
       password: 'password'
     });
+  }
+
+  canActivate() {
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/auth']);
+    }
+    return this.isAuthenticated;
   }
 
   login(username: string, password: string): boolean {

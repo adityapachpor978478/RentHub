@@ -11,8 +11,10 @@ export class HeaderComponent {
   constructor(private dialog: MatDialog) {}
 
   openPropertyForm() {
+    this.dialog.closeAll();
     this.dialog.open(PropertyFormComponent, {
-      width: '600px'
+      width: '600px',
+      // position: 'absolute'
     });
   }
 }

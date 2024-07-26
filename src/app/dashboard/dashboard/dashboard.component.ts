@@ -28,6 +28,10 @@ export class DashboardComponent implements OnInit {
     this.dialog.closeAll();
     this.dialog.open(PropertyFormComponent, {
       width: '80%',
+      position: {
+        top: '-400px',
+        left: '10%'
+      },
       data: { property, previewMode: true, viewDetailsMode: true }
     });
   }

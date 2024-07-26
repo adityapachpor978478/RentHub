@@ -14,7 +14,10 @@ export class HeaderComponent {
     this.dialog.closeAll();
     this.dialog.open(PropertyFormComponent, {
       width: '600px',
-      // position: 'absolute'
+      position: {
+        top: '-400px',
+        left: '400px'
+      }
     });
   }
 }

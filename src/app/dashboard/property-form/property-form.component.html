@@ -46,15 +46,21 @@
   <p><strong>Vegetarian:</strong> {{property.vegetarian ? 'Yes' : 'No'}}</p>
   <div *ngIf="property.photos.length > 0">
     <p><strong>Photos:</strong></p>
-    <div *ngFor="let photo of property.photos" class="mb-2">
-      <img [src]="photo" class="img-fluid">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner" role="listbox">
+        <img src="{{ getSlide() }}" alt="slide" />
+      </div>
+
+      <button style="margin-right: 6px;" type="button" class="btn btn-secondary mt-2" (click)="getPrev()">Prev</button>
+
+      <button type="button" class="btn btn-secondary mt-2" (click)="getNext()">Next</button>
     </div>
   </div>
   <div class="d-flex justify-content-between" *ngIf="!viewDetailsMode">
-    <button type="button" class="btn btn-secondary" (click)="backToForm()">Back</button>
+    <button type="button" class="btn btn-secondary mt-2" (click)="backToForm()">Back</button>
     <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
   </div>
   <div class="d-flex justify-content-between" *ngIf="viewDetailsMode">
-    <button type="button" class="btn btn-primary" (click)="onClose()">Close</button>
+    <button type="button" class="btn btn-primary mt-2" (click)="onClose()">Close</button>
   </div>
 </div>

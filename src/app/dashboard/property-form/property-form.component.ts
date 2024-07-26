@@ -12,11 +12,18 @@ export class PropertyFormComponent {
   previewMode: boolean;
   viewDetailsMode: boolean;
 
+  i: number;
+  image: any;
+
   constructor(
     private dataService: DataService,
     private dialogRef: MatDialogRef<PropertyFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+
+    this.i = 0;
+    this.image = this.property?.photos[this.i];
+
     this.property = data && data.property || {
       location: '',
       contact: '',
@@ -27,6 +34,21 @@ export class PropertyFormComponent {
     };
     this.previewMode = data?.previewMode || false;
     this.viewDetailsMode = data?.viewDetailsMode || false;
+  }
+
+  getSlide() {
+    this.image = this.property?.photos[this.i];
+    return this.image;
+  }
+
+  getPrev() {
+    this.i == 0 ? (this.i = this.property.photos.length - 1) : this.i--;
+    this.image = this.property.photos[this.i];
+  }
+
+  getNext() {
+    this.i < this.property.photos.length - 1 ? this.i++ : (this.i = 0);
+    this.image = this.property.photos[this.i];
   }
 
   onPreview() {

@@ -15,10 +15,18 @@
     </div>
     <div class="mb-3">
       <label>Amenities</label><br>
-      <input type="checkbox" [(ngModel)]="property.amenities" name="amenities" value="Gym"> Gym
-      <input type="checkbox" [(ngModel)]="property.amenities" name="amenities" value="Elevator"> Elevator
-      <input type="checkbox" [(ngModel)]="property.amenities" name="amenities" value="Club House"> Club House
-      <input type="checkbox" [(ngModel)]="property.amenities" name="amenities" value="Parking"> Parking
+      <div>
+        <input type="checkbox" (change)="onAmenityChange($event, 'Gym')" [checked]="property.amenities.includes('Gym')"> Gym
+      </div>
+      <div>
+        <input type="checkbox" (change)="onAmenityChange($event, 'Elevator')" [checked]="property.amenities.includes('Elevator')"> Elevator
+      </div>
+      <div>
+        <input type="checkbox" (change)="onAmenityChange($event, 'Club House')" [checked]="property.amenities.includes('Club House')"> Club House
+      </div>
+      <div>
+        <input type="checkbox" (change)="onAmenityChange($event, 'Parking')" [checked]="property.amenities.includes('Parking')"> Parking
+      </div>
     </div>
     <div class="mb-3">
       <label>Vegetarian Preference</label><br>

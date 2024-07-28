@@ -78,6 +78,14 @@ export class PropertyFormComponent {
     }
   }
 
+  onAmenityChange(event: any, amenity: string) {
+    if (event.target.checked) {
+      this.property.amenities.push(amenity);
+    } else {
+      this.property.amenities = this.property.amenities.filter(a => a !== amenity);
+    }
+  }
+
   close() {
     this.dialogRef.close();
   }

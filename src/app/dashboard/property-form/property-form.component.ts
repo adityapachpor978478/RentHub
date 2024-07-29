@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DataService, Property } from '../data.service';
+import { DataService, Property, Comment } from '../data.service';
 
 @Component({
   selector: 'app-property-form',
@@ -11,6 +11,7 @@ export class PropertyFormComponent {
   property: Property;
   previewMode: boolean;
   viewDetailsMode: boolean;
+  newCommentText: string = '';
 
   i: number;
   image: any;
@@ -30,7 +31,8 @@ export class PropertyFormComponent {
       furnished: false,
       amenities: [],
       vegetarian: false,
-      photos: []
+      photos: [],
+      comments: [],
     };
     this.previewMode = data?.previewMode || false;
     this.viewDetailsMode = data?.viewDetailsMode || false;
@@ -93,5 +95,13 @@ export class PropertyFormComponent {
   backToForm() {
     this.previewMode = false;
     this.close();
+  }
+
+  addComment() {
+    if (this.newCommentText) {
+      const propertyIndex = this.dataService.getProperties().indexOf(this.property);
+      this.dataService.addComment(propertyIndex, this.newCommentText);
+      this.newCommentText = '';
+    }
   }
 }

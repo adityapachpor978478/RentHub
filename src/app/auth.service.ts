@@ -14,6 +14,7 @@ interface User {
 })
 export class AuthService implements CanActivate {
   private users: User[] = [];
+  private usernameKey = 'loggedInUsername';
 
   private isAuthenticated = false;
 
@@ -39,6 +40,7 @@ export class AuthService implements CanActivate {
     const user = this.users.find(u => u.username === username && u.password === password);
     if (user) {
       this.isAuthenticated = true;
+      this.setUsername(username);
       return true;
     }
     return false;
@@ -59,5 +61,17 @@ export class AuthService implements CanActivate {
 
   isLoggedIn(): boolean {
     return this.isAuthenticated;
+  }
+
+  setUsername(username: string): void {
+    sessionStorage.setItem(this.usernameKey, username);
+  }
+
+  getUsername(): string | null {
+    return sessionStorage.getItem(this.usernameKey);
+  }
+
+  clearUsername(): void {
+    sessionStorage.removeItem(this.usernameKey);
   }
 }

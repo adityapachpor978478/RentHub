@@ -16,6 +16,7 @@ export class HeaderComponent {
   searchApplied: boolean = false;
 
   @Output() searchAndFilter = new EventEmitter<any>();
+  @Output() propertyAdded = new EventEmitter<any>();
 
   @ViewChildren('amenityCheckbox') amenityCheckboxes: QueryList<any>;
 
@@ -66,12 +67,16 @@ export class HeaderComponent {
 
   openPropertyForm() {
     this.dialog.closeAll();
-    this.dialog.open(PropertyFormComponent, {
+    const dialogRef = this.dialog.open(PropertyFormComponent, {
       width: '600px',
       position: {
         top: '-400px',
         left: '400px'
       }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {      
+      this.propertyAdded.emit(true);
     });
   }
 }

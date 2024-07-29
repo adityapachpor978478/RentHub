@@ -20,9 +20,12 @@ export class DashboardComponent implements OnInit {
   }
 
   loadProperties() {
-    this.properties = this.dataService.getProperties();
-    this.filteredProperties = [...this.properties];
-    this.setFeaturedProperty();
+    this.properties = [];
+    setTimeout(() => {
+      this.properties = this.dataService.getProperties();
+      this.filteredProperties = [...this.properties];
+      this.setFeaturedProperty();
+    },10)
   }
 
   openPropertyForm() {
@@ -32,14 +35,13 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.properties = this.dataService.getProperties();
-      this.applyFilters();
+      this.loadProperties();
     });
   }
 
   openDetails(property: Property) {
     this.dialog.closeAll();
-    this.dialog.open(PropertyFormComponent, {
+    const dialogRef = this.dialog.open(PropertyFormComponent, {
       width: '80%',
       position: {
         top: '-400px',
@@ -47,6 +49,14 @@ export class DashboardComponent implements OnInit {
       },
       data: { property, previewMode: true, viewDetailsMode: true }
     });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadProperties();
+    });
+  }
+
+  onPropertyAdd() {
+    this.loadProperties();
   }
 
   setFeaturedProperty() {

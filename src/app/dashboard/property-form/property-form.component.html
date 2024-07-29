@@ -64,7 +64,7 @@
       <button type="button" class="btn btn-secondary mt-2" (click)="getNext()">Next</button>
     </div>
   </div>
-  <div class="mt-3">
+  <div class="mt-3"  *ngIf="viewDetailsMode">
     <h4>Comments</h4>
     <div *ngFor="let comment of property.comments" class="mb-2">
       <strong>{{comment.username}}</strong>: {{comment.text}}

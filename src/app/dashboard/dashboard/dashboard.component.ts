@@ -9,8 +9,9 @@ import { PropertyFormComponent } from '../property-form/property-form.component'
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-  featuredProperty: Property;
-  otherProperties: Property[];
+  properties: Property[] = [];
+  filteredProperties: Property[] = [];
+  featuredProperty: Property | null;
 
   constructor(private dataService: DataService, public dialog: MatDialog) {}
 
@@ -19,9 +20,21 @@ export class DashboardComponent implements OnInit {
   }
 
   loadProperties() {
-    const properties = this.dataService.getProperties();
-    this.featuredProperty = this.dataService.getRandomProperty();
-    this.otherProperties = this.dataService.getProperties();
+    this.properties = this.dataService.getProperties();
+    this.filteredProperties = [...this.properties];
+    this.setFeaturedProperty();
+  }
+
+  openPropertyForm() {
+    const dialogRef = this.dialog.open(PropertyFormComponent, {
+      width: '600px',
+      data: { property: null, previewMode: false }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.properties = this.dataService.getProperties();
+      this.applyFilters();
+    });
   }
 
   openDetails(property: Property) {
@@ -33,6 +46,37 @@ export class DashboardComponent implements OnInit {
         left: '10%'
       },
       data: { property, previewMode: true, viewDetailsMode: true }
+    });
+  }
+
+  setFeaturedProperty() {
+    if (this.filteredProperties.length > 0) {
+      const randomIndex = Math.floor(Math.random() * this.filteredProperties.length);
+      this.featuredProperty = this.filteredProperties[randomIndex];
+    } else {
+      this.featuredProperty = null;
+    }
+  }
+
+  onSearchAndFilter(filterCriteria: any) {
+    this.filteredProperties = this.properties.filter(property => {
+      const matchesLocation = property.location.toLowerCase().includes(filterCriteria.location.toLowerCase());
+      const matchesFurnished = filterCriteria.furnished === '' || property.furnished.toString() === filterCriteria.furnished;
+      const matchesVegetarian = filterCriteria.vegetarian === '' || property.vegetarian.toString() === filterCriteria.vegetarian;
+      const matchesAmenities = filterCriteria.amenities.every((amenity: string) => property.amenities.includes(amenity));
+      return matchesLocation && matchesFurnished && matchesVegetarian && matchesAmenities;
+    });
+    this.setFeaturedProperty();
+  }
+
+  applyFilters() {
+    this.filteredProperties = [...this.properties];
+    // Apply current filter criteria if any
+    this.onSearchAndFilter({
+      location: '',
+      furnished: '',
+      vegetarian: '',
+      amenities: []
     });
   }
 }

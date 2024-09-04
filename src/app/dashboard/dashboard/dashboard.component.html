@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-12 col-md-4 mb-3" *ngFor="let property of filteredProperties">
         <div class="card" *ngIf="property != featuredProperty">
-          <img [src]="property.photos[0]" class="card-img-top" alt="Property Photo">
+          <img [src]="property.photos[0]" class="card-img-top" style="height: 267px;" alt="Property Photo">
           <div class="card-body">
             <h5 class="card-title">{{ property.location }}</h5>
             <button class="btn btn-primary" (click)="openDetails(property)">View Details</button>
